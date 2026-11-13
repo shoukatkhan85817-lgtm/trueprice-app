@@ -17,7 +17,12 @@ h1{font-size:clamp(38px,7vw,64px);letter-spacing:-2.7px;line-height:1.02;margin:
 .scanrow{display:grid;grid-template-columns:1fr auto;gap:10px}.search{width:100%;border:1px solid var(--line);border-radius:14px;padding:16px 17px;font-size:15px;outline:none}.search:focus{border-color:var(--blue);box-shadow:0 0 0 3px #2457e61a}
 .btn{border:0;border-radius:14px;background:var(--blue);color:white;font-weight:800;padding:0 22px;cursor:pointer;font-size:14px}.btn:hover{filter:brightness(.95)}
 .actions{display:flex;gap:10px;margin-top:12px}.secondary{flex:1;border:1px solid var(--line);background:white;border-radius:13px;padding:13px;cursor:pointer;font-weight:700;color:#344054}.secondary:hover{background:#f9fafb}
-#file{display:none}.hint{font-size:12px;color:#98a2b3;margin-top:12px;text-align:center}
+#cameraFile,#galleryFile{display:none}.hint{font-size:12px;color:#98a2b3;margin-top:12px;text-align:center}
+.photo-preview{display:none;margin:16px auto 0;max-width:360px;text-align:center}
+.photo-preview.show{display:block}
+.photo-preview img{max-width:100%;max-height:280px;object-fit:contain;border-radius:14px;border:1px solid var(--line);background:#f8fafc}
+.photo-status{font-size:13px;color:var(--green);font-weight:700;margin-top:8px}
+.scan-note{font-size:12px;color:#8a4b08;background:#fff8e8;border:1px solid #f5dfb2;border-radius:12px;padding:10px 12px;margin-top:12px;line-height:1.45}
 .cats{display:flex;flex-wrap:wrap;justify-content:center;gap:9px;margin:24px auto 0;max-width:850px}.cat{border:1px solid var(--line);background:white;border-radius:99px;padding:9px 14px;color:#475467;font-size:13px;cursor:pointer}.cat.active{background:var(--blue2);border-color:#cbd7ff;color:var(--blue);font-weight:800}
 .section{margin:66px 0 0}.sectionhead{display:flex;justify-content:space-between;align-items:end;gap:16px;margin-bottom:18px}.section h2{font-size:24px;letter-spacing:-.7px;margin:0}.section p{color:var(--muted);margin:6px 0 0;font-size:14px}
 .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.step,.feature{background:white;border:1px solid var(--line);border-radius:18px;padding:20px}.num{width:34px;height:34px;border-radius:11px;background:var(--blue2);color:var(--blue);display:grid;place-items:center;font-weight:900}.step h3,.feature h3{font-size:16px;margin:14px 0 6px}.step p,.feature p{font-size:13px;color:var(--muted);line-height:1.55;margin:0}
@@ -45,11 +50,17 @@ footer{margin-top:55px;border-top:1px solid var(--line);padding-top:20px;display
           <button class="btn" id="searchBtn">Check Value →</button>
         </div>
         <div class="actions">
-          <button class="secondary" id="cameraBtn">📷 Scan with camera</button>
-          <button class="secondary" id="uploadBtn">＋ Upload photo</button>
-          <input type="file" id="file" accept="image/*" capture="environment">
+          <button class="secondary" id="cameraBtn">📷 Take photo</button>
+          <button class="secondary" id="uploadBtn">＋ Choose from gallery</button>
+          <input type="file" id="cameraFile" accept="image/*" capture="environment">
+          <input type="file" id="galleryFile" accept="image/*">
         </div>
-        <div class="hint">Photo · Barcode · QR · Product name · Model number</div>
+        <div class="hint">Take a photo or choose one from your phone</div>
+        <div class="photo-preview" id="photoPreview">
+          <img id="previewImage" alt="Selected product photo preview">
+          <div class="photo-status" id="photoStatus">Photo selected</div>
+          <div class="scan-note">Photo upload is working. AI product identification and live market prices will be connected in the next development step. No real valuation is being generated yet.</div>
+        </div>
       </div>
       <div class="cats" id="cats">
         <button class="cat active">All items</button><button class="cat">Mobiles</button><button class="cat">Cars</button><button class="cat">Watches</button><button class="cat">Fashion</button><button class="cat">Shoes</button><button class="cat">Gold & Jewelry</button><button class="cat">Electronics</button><button class="cat">Furniture</button>
@@ -90,16 +101,30 @@ footer{margin-top:55px;border-top:1px solid var(--line);padding-top:20px;display
       <div style="font-size:34px">✓</div>
     </section>
   </main>
-  <footer><span>© TRUEPRICE · Concept prototype</span><span>Know Before You Buy.</span></footer>
+  <footer><span>© TRUEPRICE · Free product intelligence prototype</span><span>Know Before You Buy.</span></footer>
 </div>
 <script>
 const query=document.getElementById('query'), result=document.getElementById('result'), title=document.getElementById('resultTitle');
-function showResult(){const q=query.value.trim();if(!q){query.focus();query.placeholder='Enter a product name first…';return;}title.textContent=q+' — valuation preview';result.classList.add('show');result.scrollIntoView({behavior:'smooth',block:'nearest'});}
+const cameraFile=document.getElementById('cameraFile'), galleryFile=document.getElementById('galleryFile');
+const photoPreview=document.getElementById('photoPreview'), previewImage=document.getElementById('previewImage'), photoStatus=document.getElementById('photoStatus');
+let currentPhotoUrl=null;
+function showResult(){const q=query.value.trim();if(!q){query.focus();query.placeholder='Enter a product name first…';return;}title.textContent=q+' — demo preview';result.classList.add('show');result.scrollIntoView({behavior:'smooth',block:'nearest'});}
 document.getElementById('searchBtn').addEventListener('click',showResult);
 query.addEventListener('keydown',e=>{if(e.key==='Enter')showResult()});
-document.getElementById('uploadBtn').addEventListener('click',()=>document.getElementById('file').click());
-document.getElementById('cameraBtn').addEventListener('click',()=>document.getElementById('file').click());
-document.getElementById('file').addEventListener('change',e=>{const f=e.target.files&&e.target.files[0];if(f){title.textContent=f.name+' — scan preview';result.classList.add('show');result.scrollIntoView({behavior:'smooth',block:'nearest'});}});
+document.getElementById('uploadBtn').addEventListener('click',()=>galleryFile.click());
+document.getElementById('cameraBtn').addEventListener('click',()=>cameraFile.click());
+function handlePhoto(file){
+  if(!file) return;
+  if(!file.type || !file.type.startsWith('image/')){photoStatus.textContent='Please select an image file.';photoPreview.classList.add('show');return;}
+  if(currentPhotoUrl) URL.revokeObjectURL(currentPhotoUrl);
+  currentPhotoUrl=URL.createObjectURL(file);
+  previewImage.src=currentPhotoUrl;
+  photoStatus.textContent='Photo ready: '+file.name;
+  photoPreview.classList.add('show');
+  photoPreview.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+cameraFile.addEventListener('change',e=>handlePhoto(e.target.files&&e.target.files[0]));
+galleryFile.addEventListener('change',e=>handlePhoto(e.target.files&&e.target.files[0]));
 document.querySelectorAll('.cat').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('.cat').forEach(b=>b.classList.remove('active'));btn.classList.add('active');query.value=btn.textContent==='All items'?'':btn.textContent;}));
 </script>
 </body>
