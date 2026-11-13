@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#f7f8fa">
+<title>TRUEPRICE — Know Before You Buy</title>
+<style>
+:root{--ink:#111827;--muted:#667085;--line:#e7eaf0;--blue:#2457e6;--blue2:#edf2ff;--green:#087a55;--bg:#f7f8fa}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+.wrap{max-width:1120px;margin:auto;padding:22px 22px 60px}.top{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.brand{font-weight:900;letter-spacing:-1.4px;font-size:25px}.brand span{color:var(--blue)}.topright{display:flex;gap:10px;align-items:center;color:var(--muted);font-size:13px}
+.pill{border:1px solid var(--line);background:white;border-radius:99px;padding:9px 13px}
+.hero{text-align:center;padding:66px 12px 30px}.eyebrow{color:var(--blue);font-size:12px;font-weight:800;letter-spacing:1.7px;text-transform:uppercase}
+h1{font-size:clamp(38px,7vw,64px);letter-spacing:-2.7px;line-height:1.02;margin:16px 0 14px}.sub{color:var(--muted);font-size:17px;line-height:1.55;max-width:620px;margin:0 auto}
+.panel{max-width:790px;margin:30px auto 0;background:white;border:1px solid var(--line);border-radius:24px;padding:20px;box-shadow:0 18px 55px rgba(16,24,40,.06)}
+.scanrow{display:grid;grid-template-columns:1fr auto;gap:10px}.search{width:100%;border:1px solid var(--line);border-radius:14px;padding:16px 17px;font-size:15px;outline:none}.search:focus{border-color:var(--blue);box-shadow:0 0 0 3px #2457e61a}
+.btn{border:0;border-radius:14px;background:var(--blue);color:white;font-weight:800;padding:0 22px;cursor:pointer;font-size:14px}.btn:hover{filter:brightness(.95)}
+.actions{display:flex;gap:10px;margin-top:12px}.secondary{flex:1;border:1px solid var(--line);background:white;border-radius:13px;padding:13px;cursor:pointer;font-weight:700;color:#344054}.secondary:hover{background:#f9fafb}
+#file{display:none}.hint{font-size:12px;color:#98a2b3;margin-top:12px;text-align:center}
+.cats{display:flex;flex-wrap:wrap;justify-content:center;gap:9px;margin:24px auto 0;max-width:850px}.cat{border:1px solid var(--line);background:white;border-radius:99px;padding:9px 14px;color:#475467;font-size:13px;cursor:pointer}.cat.active{background:var(--blue2);border-color:#cbd7ff;color:var(--blue);font-weight:800}
+.section{margin:66px 0 0}.sectionhead{display:flex;justify-content:space-between;align-items:end;gap:16px;margin-bottom:18px}.section h2{font-size:24px;letter-spacing:-.7px;margin:0}.section p{color:var(--muted);margin:6px 0 0;font-size:14px}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.step,.feature{background:white;border:1px solid var(--line);border-radius:18px;padding:20px}.num{width:34px;height:34px;border-radius:11px;background:var(--blue2);color:var(--blue);display:grid;place-items:center;font-weight:900}.step h3,.feature h3{font-size:16px;margin:14px 0 6px}.step p,.feature p{font-size:13px;color:var(--muted);line-height:1.55;margin:0}
+.features{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.icon{font-size:22px}.trust{margin-top:54px;padding:25px;border-radius:20px;background:#101828;color:white;display:flex;justify-content:space-between;align-items:center;gap:20px}.trust p{color:#cbd5e1;font-size:14px;line-height:1.5;margin:7px 0 0}.trust strong{font-size:20px}
+.result{display:none;max-width:790px;margin:18px auto 0;background:white;border:1px solid var(--line);border-radius:20px;padding:20px}.result.show{display:block}.resulttop{display:flex;justify-content:space-between;gap:10px;align-items:center}.demo{font-size:11px;font-weight:800;color:#8a4b08;background:#fff4df;padding:7px 10px;border-radius:99px}.pricegrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:16px 0}.price{background:#f8fafc;border:1px solid var(--line);border-radius:14px;padding:14px}.price small{color:var(--muted);display:block;font-size:12px}.price b{display:block;font-size:20px;margin-top:6px}.advice{padding:14px;border-radius:13px;background:#effaf5;color:#05603a;font-size:14px;line-height:1.5}
+footer{margin-top:55px;border-top:1px solid var(--line);padding-top:20px;display:flex;justify-content:space-between;gap:12px;color:#98a2b3;font-size:12px}
+@media(max-width:700px){.wrap{padding:16px 15px 40px}.hero{padding-top:50px}h1{letter-spacing:-1.7px}.scanrow{grid-template-columns:1fr}.btn{padding:15px}.steps{grid-template-columns:1fr}.features{grid-template-columns:repeat(2,1fr)}.trust{display:block}.pricegrid{grid-template-columns:1fr}.sectionhead{display:block}.topright .pill:last-child{display:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="brand">TRUE<span>PRICE</span></div>
+    <div class="topright"><span class="pill">🌐 Global vision</span><span class="pill">PKR · Pakistan</span></div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="eyebrow">Global product intelligence</div>
+      <h1>Know Before<br> You Buy.</h1>
+      <p class="sub">Scan any product. Discover its real market value, compare prices and make a smarter buying decision.</p>
+      <div class="panel">
+        <div class="scanrow">
+          <input class="search" id="query" placeholder="Search any product, brand or model…" aria-label="Search product">
+          <button class="btn" id="searchBtn">Check Value →</button>
+        </div>
+        <div class="actions">
+          <button class="secondary" id="cameraBtn">📷 Scan with camera</button>
+          <button class="secondary" id="uploadBtn">＋ Upload photo</button>
+          <input type="file" id="file" accept="image/*" capture="environment">
+        </div>
+        <div class="hint">Photo · Barcode · QR · Product name · Model number</div>
+      </div>
+      <div class="cats" id="cats">
+        <button class="cat active">All items</button><button class="cat">Mobiles</button><button class="cat">Cars</button><button class="cat">Watches</button><button class="cat">Fashion</button><button class="cat">Shoes</button><button class="cat">Gold & Jewelry</button><button class="cat">Electronics</button><button class="cat">Furniture</button>
+      </div>
+      <div class="result" id="result">
+        <div class="resulttop"><strong id="resultTitle">Product valuation preview</strong><span class="demo">DEMO PREVIEW</span></div>
+        <p style="color:#667085;font-size:13px;margin:7px 0 0">This sample demonstrates how a result could look. It is not a live market valuation.</p>
+        <div class="pricegrid">
+          <div class="price"><small>Estimated fair value</small><b>Rs. 43,000</b></div>
+          <div class="price"><small>Typical asking price</small><b>Rs. 48,000</b></div>
+          <div class="price"><small>Potential saving</small><b style="color:#087a55">Rs. 5,000</b></div>
+        </div>
+        <div class="advice"><b>Buying insight:</b> Compare the item's exact model, condition and warranty before paying. A photo alone cannot confirm authenticity.</div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="sectionhead"><div><h2>Buying made simple</h2><p>One clear process from discovery to decision.</p></div></div>
+      <div class="steps">
+        <article class="step"><div class="num">1</div><h3>Scan or search</h3><p>Take a photo, scan a barcode or enter the product name and model.</p></article>
+        <article class="step"><div class="num">2</div><h3>Understand its value</h3><p>See new, used and refurbished price ranges, condition guidance and confidence.</p></article>
+        <article class="step"><div class="num">3</div><h3>Compare before buying</h3><p>Compare sellers and offers, then continue to a trusted buying option when available.</p></article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="sectionhead"><div><h2>More than a price scanner</h2><p>Designed to help people avoid overpaying.</p></div></div>
+      <div class="features">
+        <article class="feature"><div class="icon">🎯</div><h3>Fair value</h3><p>Market-based price range with date and confidence level.</p></article>
+        <article class="feature"><div class="icon">🛡️</div><h3>Authenticity signals</h3><p>Helpful checks, with clear limits on what a photo can prove.</p></article>
+        <article class="feature"><div class="icon">📊</div><h3>Price comparison</h3><p>Compare available offers across sellers and locations.</p></article>
+        <article class="feature"><div class="icon">💡</div><h3>Smart buying advice</h3><p>Know when a seller's asking price looks unusually high.</p></article>
+      </div>
+    </section>
+
+    <section class="trust">
+      <div><strong>Buy smarter. Not blindly.</strong><p>TRUEPRICE aims to show where a valuation comes from, when it was checked and how confident the estimate is.</p></div>
+      <div style="font-size:34px">✓</div>
+    </section>
+  </main>
+  <footer><span>© TRUEPRICE · Concept prototype</span><span>Know Before You Buy.</span></footer>
+</div>
+<script>
+const query=document.getElementById('query'), result=document.getElementById('result'), title=document.getElementById('resultTitle');
+function showResult(){const q=query.value.trim();if(!q){query.focus();query.placeholder='Enter a product name first…';return;}title.textContent=q+' — valuation preview';result.classList.add('show');result.scrollIntoView({behavior:'smooth',block:'nearest'});}
+document.getElementById('searchBtn').addEventListener('click',showResult);
+query.addEventListener('keydown',e=>{if(e.key==='Enter')showResult()});
+document.getElementById('uploadBtn').addEventListener('click',()=>document.getElementById('file').click());
+document.getElementById('cameraBtn').addEventListener('click',()=>document.getElementById('file').click());
+document.getElementById('file').addEventListener('change',e=>{const f=e.target.files&&e.target.files[0];if(f){title.textContent=f.name+' — scan preview';result.classList.add('show');result.scrollIntoView({behavior:'smooth',block:'nearest'});}});
+document.querySelectorAll('.cat').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('.cat').forEach(b=>b.classList.remove('active'));btn.classList.add('active');query.value=btn.textContent==='All items'?'':btn.textContent;}));
+</script>
+</body>
+</html>
